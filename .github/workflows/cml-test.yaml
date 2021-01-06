@@ -1,4 +1,4 @@
-on: [push, pull_request]
+on: [push]
 
 jobs:
   deploy-runner:
@@ -33,6 +33,6 @@ jobs:
       run: npm ci
     - name: "tests"
       run: |
-        cml-publish imgs/dark_logo.png --md > report.md
-        cml-send-comment report.md
+        node cml-publish imgs/dark_logo.png --md > report.md
+        node cml-send-comment report.md
 
