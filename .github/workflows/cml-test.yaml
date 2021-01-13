@@ -30,6 +30,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: "tests"
+      env:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
       run: |
         npm ci
         node bin/cml-publish imgs/dark_logo.png --md --repo https://github.com/elleobrien/cloudrunner_test > report.md
