@@ -20,7 +20,7 @@ jobs:
           cml-runner \
           --cloud aws \
           --cloud-region us-west \
-          --cloud-type=t2.micro \
+          --cloud-type=g2.2xlarge \
           --labels=cml-runner
           
           
@@ -35,5 +35,6 @@ jobs:
       run: |
         npm ci
         node bin/cml-publish imgs/dark_logo.png --md --repo https://github.com/elleobrien/cloudrunner_test > report.md
+        nvidia-smi >> report.md
         node bin/cml-send-comment report.md
 
