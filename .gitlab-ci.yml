@@ -1,8 +1,32 @@
-test:
+stages:
+  - deploy
+  - test
+
+deploy_job:
+  stage: deploy
+  when: always
+  image: dvcorg/cml
+  script:
+    - cml-runner
+      --cloud-spot
+      --cloud aws
+      --cloud-region us-west
+      --cloud-type g2.2xlarge
+      --labels=cml-runner-gpu
+
+test_runner:
+  stage: test
+  when: on_success
+  tags:
+    - cml-runner-gpu
+  script:
+    - nvidia-smi
+
+test_container:
+  stage: test
+  when: on_success
+  tags:
+    - cml-runner-gpu
   image: dvcorg/cml-py3:latest
   script:
-    - sudo pip install tensorboard
-
-    - npm ci
-    - npm run lint
-    - npm run test
+    - nvidia-smi
